@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.newsapp.data.model.NewsDTO
 import com.example.newsapp.databinding.FragmentNewsListBinding
+import com.example.newsapp.ui.home.Source
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -42,7 +43,11 @@ class NewsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getNews(args.query)
+        when (args.source){
+            Source.SEARCH -> viewModel.getNews(args.term)
+            Source.CATEGORY -> viewModel.getCategoryNews(args.term)
+        }
+
         lifecycleScope.launch {
             viewModel.state.collect {
                 when (it) {

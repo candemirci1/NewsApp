@@ -17,9 +17,21 @@ class NewsListViewModel @Inject constructor(
 
     val state = MutableStateFlow<NewsListViewState>(NewsListViewState.Loading)
 
-     fun getNews(query: String) {
+     fun getNews(term: String) {
         viewModelScope.launch {
-            newsRepository.getNews(query).let {
+            newsRepository.getNews(term).let {
+                when (it) {
+                    is Response.Loading -> state.value = NewsListViewState.Loading
+                    is Response.Success -> state.value = NewsListViewState.Success(it.data)
+                    is Response.Error -> state.value = NewsListViewState.Error(it.message.orEmpty())
+                }
+            }
+        }
+    }
+
+    fun getCategoryNews(term: String) {
+        viewModelScope.launch {
+            newsRepository.getCategoryNews(term).let {
                 when (it) {
                     is Response.Loading -> state.value = NewsListViewState.Loading
                     is Response.Success -> state.value = NewsListViewState.Success(it.data)

@@ -12,6 +12,13 @@ interface NewsService {
         @Query("apiKey") apiKey: String = myKey
     ): NewsDTO
 
+    @GET("top-headlines")
+    suspend fun fetchCategoryNews(
+        @Query("category") category: String,
+        @Query("apiKey") apiKey: String = myKey,
+        @Query("country") country: String = "tr"
+    ) : NewsDTO
+
 }
 
 

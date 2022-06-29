@@ -17,7 +17,10 @@
         android:name="com.example.newsapp.ui.list.NewsListFragment"
         android:label="NewsListFragment" >
         <argument
-            android:name="query"
+            android:name="term"
             app:argType="string" />
+        <argument
+            android:name="source"
+            app:argType="com.example.newsapp.ui.home.Source" />
     </fragment>
 </navigation>

@@ -20,4 +20,15 @@ class NewsRepositoryImpl(private val service: NewsService): NewsRepository {
         }
 
     }
+
+    override suspend fun getCategoryNews(category: String): Response<NewsDTO> {
+        return try {
+            val news = service.fetchCategoryNews(category)
+            Response.Success(news)
+        } catch (e: HttpException) {
+            Response.Error(e.message.orEmpty(), e.code())
+        } catch (e: IOException) {
+            Response.Error("check your internet connection")
+        }
+    }
 }

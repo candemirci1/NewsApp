@@ -7,4 +7,6 @@ import retrofit2.http.Query
 interface NewsRepository {
 
     suspend fun getNews(query: String): Response<NewsDTO>
+
+    suspend fun getCategoryNews(category: String): Response<NewsDTO>
 }
